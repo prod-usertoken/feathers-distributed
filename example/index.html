@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>feathers-distributed</title>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/feathers-client@2.4.0/dist/feathers.js"></script>
+  <script type="text/javascript">
+    var socket = io('http://localhost:3030');
+    var client = feathers()
+      .configure(feathers.hooks())
+      .configure(feathers.socketio(socket))
+      .configure(feathers.authentication({ storage: window.localStorage }));
+    var todoService = client.service('todos');
+    todoService.timeout = 10000;
+    // This one should fail
+    todoService.find({})
+    .catch(error => {
+      var appElement = document.getElementById('app')
+      appElement.innerHTML += '<p>Unauthenticated call to the TODO service gives this result:</p><pre>' + error + '</pre>'
+      console.log('Unauthenticated!', error)
+    })
+    client.authenticate({
+      strategy: 'local',
+      email: 'user@test.com',
+      password: 'password'
+    }).then(function(result){
+      console.log('Authenticated!', result);
+      todoService.find({})
+      .then(function(todos){
+        var appElement = document.getElementById('app')
+        html = '<p>Authenticated call to the TODO service gives this result:</p><ul>'
+        for (var i = 0; i < todos.total; i++) {
+          html += '<li>' + todos.data[i].title + ' with ID ' + todos.data[i]._id + ' : ' + todos.data[i].description + '</li>'
+        }
+        html += '</ul>'
+        appElement.innerHTML += html
+      })
+    }).catch(function(error){
+      console.error('Error authenticating!', error);
+    });
+  </script>
+</head>
+<body>
+<h1>feathers-distributed</h1>
+<div id="app"></div>
+</body>
+</html>

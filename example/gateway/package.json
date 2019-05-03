@@ -1,0 +1,57 @@
+{
+  "name": "gateway",
+  "description": "gateway",
+  "version": "0.0.0",
+  "homepage": "",
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "Luc Claustres",
+    "email": "luc.claustres@orange.fr"
+  },
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "test": "test/"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "yarn": ">= 0.18.0"
+  },
+  "scripts": {
+    "test": "npm run eslint && npm run mocha",
+    "eslint": "eslint src/. test/. --config .eslintrc.json",
+    "start": "node src/",
+    "mocha": "mocha test/ --recursive"
+  },
+  "dependencies": {
+    "@feathersjs/authentication": "^2.1.3",
+    "@feathersjs/authentication-jwt": "^2.0.0",
+    "@feathersjs/authentication-local": "^1.1.0",
+    "@feathersjs/configuration": "^1.0.2",
+    "@feathersjs/errors": "^3.3.0",
+    "@feathersjs/express": "^1.2.0",
+    "@feathersjs/feathers": "^3.1.3",
+    "@feathersjs/socketio": "^3.2.0",
+    "body-parser": "^1.18.1",
+    "compression": "^1.7.0",
+    "cors": "^2.8.4",
+    "cote": "^0.15.1",
+    "feathers-authentication-hooks": "^0.1.4",
+    "feathers-hooks-common": "^3.7.3",
+    "feathers-nedb": "^2.7.0",
+    "helmet": "^3.8.1",
+    "nedb": "^1.8.0",
+    "serve-favicon": "^2.4.4",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.7.1",
+    "mocha": "^3.5.3",
+    "request": "^2.82.0",
+    "request-promise": "^4.2.1"
+  }
+}
